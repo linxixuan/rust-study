@@ -1,17 +1,32 @@
 use rand::Rng;
+use std::cmp::Ordering;
 
 fn main() {
     println!("Guess the number !");
 
-    let mut guess = String::new();
     let secret_number = rand::thread_rng().gen_range(1..=100);
-    println!("The secret number is: {secret_number}");
-    println!("Please input your guess.");
+    // println!("The secret number is: {secret_number}");
+    loop {
+        println!("Please input your guess.");
 
-    std::io::stdin()
-        .read_line(&mut guess) // need referenc use same mutable prefix
-        .expect("Failed to read line");
-        // The right way to suppress the warning is to actually write error handling, but in our case we just want to crash this program when a problem occurs, so we can use expect. You’ll learn about recovering from errors in Chapter 9.
+        let mut guess = String::new();
+        std::io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed to read line");
 
-    println!("You guessed: {guess}");
+        // let guess: u32 = guess.trim().parse().expect("Please type a number");
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
+
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("Too small"),
+            Ordering::Greater => println!("Too big"),
+            Ordering::Equal => {
+                println!("you win!");
+                break;
+            }
+        }
+    }
 }
