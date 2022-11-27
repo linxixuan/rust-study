@@ -18,3 +18,8 @@ fn shadowing() {
 
     println!("The value of x is {x}");
 }
+
+fn memorySafe() {
+    let a = [3;5];
+    println!("a[8] is ${a[8]}"); // will throw error when cargo run
+}
