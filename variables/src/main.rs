@@ -21,5 +21,5 @@ fn shadowing() {
 
 fn memorySafe() {
     let a = [3;5];
-    println!("a[8] is ${a[8]}"); // will throw error when cargo run
+    // println!("a[8] is ${a[8]}"); // will throw error when cargo run
 }
